@@ -14,6 +14,10 @@ function createWindow() {
 
   win.loadFile('_windows/index.html');
 
+  win.once('ready-to-show', () => {
+    win.show();
+  });
+
   win.once('closed', function () {
     win = null;
     process.exit();
