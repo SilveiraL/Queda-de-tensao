@@ -12,7 +12,9 @@ function createWindow() {
     }
   });
 
+  // win.loadFile('exemplo/index.html');
   win.loadFile('_windows/index.html');
+  win.maximize();
 
   win.once('ready-to-show', () => {
     win.show();
