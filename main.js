@@ -6,6 +6,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
+    show: false,
     webPreferences: {
       nodeIntegration: true
     }
@@ -13,18 +14,18 @@ function createWindow() {
 
   win.loadFile('_windows/index.html');
 
-  win.on('closed', function () {
+  win.once('closed', function () {
     win = null;
     process.exit();
   });
 }
 
-app.on('ready', createWindow);
+app.once('ready', createWindow);
 
-app.on('window-all-closed', function () {
+app.once('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit();
 });
 
-app.on('activate', function () {
+app.once('activate', function () {
   if (win === null) createWindow();
 });
