@@ -6,9 +6,14 @@ function sendPython(arquivo, ...argumentos) {
         args: argumentos
     });
 
-    python.on('message', message => {
+    python.once('message', message => {
         alert(message);
     });
 }
 
-sendPython('teste.py', 1, 2, 3, 4);
+document.querySelector('button').onclick = () => {
+    const cabo = document.getElementById('cabo').value;
+    const tensao = document.getElementById('tensao').value;
+    const fp = document.getElementById('fp').value;
+    sendPython('teste.py', cabo, tensao, fp);
+}
