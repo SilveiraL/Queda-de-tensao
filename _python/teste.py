@@ -1,3 +1,6 @@
-import xlrd;
+import sys
+import xlrd
 
-print(xlrd)
+args = sys.argv[1:]
+
+print(args)
