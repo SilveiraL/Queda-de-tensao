@@ -7,12 +7,13 @@ function createWindow() {
     width: 800,
     height: 600,
     show: false,
+    icon: './img/icon.png',
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true
     }
   });
 
-  // win.loadFile('exemplo/index.html');
   win.loadFile('windows/index.html');
   win.maximize();
 
