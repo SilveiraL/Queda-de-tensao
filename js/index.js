@@ -1,6 +1,12 @@
 const $ = require('jquery');
 const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
+const Menu = electron.remote.Menu;
+const menu = Menu.getApplicationMenu();
+
+const menu_novo = menu.items[0].submenu.items[0];
+const menu_abrir = menu.items[0].submenu.items[1];
+const menu_salvar = menu.items[0].submenu.items[2];
 
 let componentes = [];
 let componentesDeletados = [];

@@ -34,18 +34,15 @@ app.once('ready', () => {
     {
       label: 'File',
       submenu: [
+        { label: 'Novo' },
+        { label: 'Abrir' },
+        { type: 'separator' },
+        { label: 'Salvar' },
+        { type: 'separator' },
         {
-          label: 'Novo',
+          label: 'Sair',
           click: () => {
-            console.log('Novo');
-          }
-        },
-        {
-          label: 'Abrir',
-          click: e => {
-            dialog.showOpenDialog({ properties: ['openFile'] }, e => {
-              alert(toString(e));
-            });
+            app.quit();
           }
         }
       ]
