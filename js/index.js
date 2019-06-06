@@ -116,7 +116,7 @@ class Componente {
                     break;
             }
 
-            console.log(this);
+            console.log('Componente configurado', this);
         });
     }
 }
