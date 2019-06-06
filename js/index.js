@@ -1,4 +1,6 @@
 const $ = require('jquery');
+const electron = require('electron');
+const BrowserWindow = electron.remote.BrowserWindow;
 
 class Componente {
     constructor() {
@@ -25,6 +27,11 @@ class Componente {
         main.click(e => {
             if (this.dom.hasClass('seguir-mouse')) {
                 this.dom.removeClass('seguir-mouse');
+
+                this.dom.click(e => {
+                    abrirConfiguracoes(this);
+                });
+
                 console.log(this.getX(), this.getY());
             }
         });
@@ -63,6 +70,23 @@ class No extends Componente {
     }
 }
 
+function abrirConfiguracoes() {
+    const config = new BrowserWindow({
+        title: 'Configurações do componente',
+        width: 400, height: 300,
+        autoHideMenuBar: true,
+        icon: './img/icon.png',
+        show: false,
+        resizable: false
+    });
+
+    config.loadFile('./windows/config-componentes.html');
+
+    config.once('ready-to-show', () => {
+        config.show();
+    });
+}
+
 $('.componente').click(e => {
     switch (e.target.id) {
         case 'transformador':
@@ -73,9 +97,3 @@ $('.componente').click(e => {
             objetoEdicao = new No();
     }
 });
-
-// $('main').mousemove(e => {
-//     if (!!objetoEdicao) {
-
-//     }
-// });

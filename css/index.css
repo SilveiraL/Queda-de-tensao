@@ -7,6 +7,10 @@
     cursor: pointer;
 }
 
+.componente {
+    border: solid 2px black;
+}
+
 .transformador {
     height: 30px;
     width: 30px;
