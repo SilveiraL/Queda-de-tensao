@@ -1,7 +1,5 @@
 const $ = require('jquery');
 
-var objetoEdicao;
-
 class Componente {
     constructor() {
         this.dom = $('<div>')
@@ -27,9 +25,7 @@ class Componente {
         main.click(e => {
             if (this.dom.hasClass('seguir-mouse')) {
                 this.dom.removeClass('seguir-mouse');
-                this.setX(0);
-                this.setY(0);
-                console.log()
+                console.log(this.getX(), this.getY());
             }
         });
     }
@@ -47,7 +43,7 @@ class Componente {
     }
 
     getY() {
-        return parseInt(this.dom.css('bottom').replace('px', ''));
+        return parseInt(this.dom.css('top').replace('px', ''));
     }
 }
 
