@@ -3,6 +3,7 @@ const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
 
 let componentes = [];
+let componentesDeletados = [];
 
 Array.prototype.top = function () {
     return this[this.length - 1];
@@ -62,6 +63,11 @@ class Componente {
         return parseInt(this.dom.css('top').replace('px', ''));
     }
 
+    setVisible(bool) {
+        if (bool) this.dom.css('display', 'block');
+        else this.dom.css('display', 'none')
+    }
+
     abrirConfiguracoes() {
         localStorage.setItem('componente', JSON.stringify(this));
 
@@ -115,4 +121,26 @@ $('.componente').click(e => {
         case 'no':
             componentes.push(new No());
     }
+});
+
+$(document).keypress(key => {
+    switch (key.keyCode) {
+        case 26: // Ctrl + z
+            if (componentes.length > 0) {
+                let componente = componentes.pop();
+                componente.setVisible(false);
+                componentesDeletados.push(componente);
+            }
+            break;
+
+        case 25: // Ctrl + y
+            if (componentesDeletados.length > 0) {
+                let componente = componentesDeletados.pop();
+                componente.setVisible(true);
+                componentes.push(componente);
+            }
+            break;
+    }
+
+    console.log(key.keyCode);
 });
