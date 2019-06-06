@@ -11,21 +11,15 @@
 
 <body class="bg-light container-fluid">
     <div class="row p-2">
-        <span class="col-4 text-dark">Tensão: </span>
-        <input type="text" class="col-8 rounded-pill border-secondary">
-    </div>
-    <div class="row p-2">
-        <span class="col-4 text-dark">Parâmetro 2: </span>
-        <input type="text" class="col-8 rounded-pill border-secondary">
-    </div>
-    <div class="row p-2">
-        <span class="col-4 text-dark">Parâmetro 3: </span>
-        <input type="text" class="col-8 rounded-pill border-secondary">
+        <span class="col-6 text-dark">Id: </span>
+        <input id="id" type="text" class="col-6 rounded border-secondary px-1">
     </div>
 
+    <div id="atributos"></div>
+
     <div class="row p-2 flex-row-reverse">
-        <button class="btn btn-danger flex-column align-items-center col-3 m-1">Cancelar</button>
-        <button class="btn btn-success flex-column align-items-center col-3 m-1">Salvar</button>
+        <button id="cancelar" class="btn btn-danger flex-column align-items-center col-3 m-1">Cancelar</button>
+        <button id="salvar" class="btn btn-success flex-column align-items-center col-3 m-1">Salvar</button>
     </div>
 
     <script src="../js/config-componentes.js"></script>

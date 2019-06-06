@@ -9,13 +9,14 @@ Array.prototype.top = function () {
 }
 
 class Componente {
-    constructor(tipo) {
+    constructor(tipo, id) {
         this.dom = $('<div>')
             .addClass('componente')
             .addClass('bg-primary')
             .addClass('seguir-mouse')
             .css('position', 'absolute')
 
+        this.id = id;
         this.tipo = tipo;
 
         const main = $('main');
@@ -37,7 +38,7 @@ class Componente {
                 this.dom.removeClass('seguir-mouse');
 
                 this.dom.dblclick(e => {
-                    abrirConfiguracoes(this);
+                    this.abrirConfiguracoes();
                 });
 
                 console.log(this.getX(), this.getY());
@@ -60,11 +61,37 @@ class Componente {
     getY() {
         return parseInt(this.dom.css('top').replace('px', ''));
     }
+
+    abrirConfiguracoes() {
+        localStorage.setItem('componente', JSON.stringify(this));
+
+        const config = new BrowserWindow({
+            title: 'Configurações do componente',
+            width: 400, height: 300,
+            autoHideMenuBar: true,
+            icon: './img/icon.png',
+            show: false,
+            webPreferences: {
+                nodeIntegration: true
+            },
+            resizable: false
+        });
+
+        config.loadFile('./windows/config-componentes.html');
+
+        config.once('ready-to-show', () => {
+            config.show();
+        });
+    }
 }
 
 class Transformador extends Componente {
     constructor() {
         super('transformador');
+
+        this.potenciaAparente = null;
+        this.cargaAcumulada = null;
+        this.fase = null;
 
         this.dom.addClass('transformador');
     }
@@ -72,29 +99,11 @@ class Transformador extends Componente {
 
 class No extends Componente {
     constructor() {
-        super('no');
+        super('nó');
 
+        this.cargaAcumulada = null;
         this.dom.addClass('no');
     }
-}
-
-function abrirConfiguracoes(componente) {
-    localStorage.setItem('componente', componente);
-
-    const config = new BrowserWindow({
-        title: 'Configurações do componente',
-        width: 400, height: 300,
-        autoHideMenuBar: true,
-        icon: './img/icon.png',
-        show: false,
-        resizable: false
-    });
-
-    config.loadFile('./windows/config-componentes.html');
-
-    config.once('ready-to-show', () => {
-        config.show();
-    });
 }
 
 $('.componente').click(e => {
