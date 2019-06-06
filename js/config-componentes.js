@@ -2,6 +2,13 @@ const $ = require('jquery');
 
 class Atributo {
     constructor(id, atributo) {
+        this.input = $('<input>')
+            .attr('type', 'text')
+            .addClass('col-6')
+            .addClass('rounded')
+            .addClass('border-secondary')
+            .addClass('px-1')
+
         this.dom = $('<div>')
             .addClass('row')
             .addClass('p-2')
@@ -10,23 +17,20 @@ class Atributo {
                     .addClass('col-6')
                     .addClass('text-dark')
                     .html(atributo + ': ')
-            ).append(
-                $('<input>')
-                    .attr('type', 'text')
-                    .addClass('col-6')
-                    .addClass('rounded')
-                    .addClass('border-secondary')
-                    .addClass('px-1')
-            );
+            ).append(this.input);
 
         $('#atributos').append(this.dom);
+    }
+
+    getText() {
+        return this.input.val();
     }
 }
 
 const componente = JSON.parse(localStorage.getItem('componente'));
 $('title').html('Configurações do ' + componente.tipo);
 
-let atributos = [];
+let atributos = [new Atributo('id', 'Id')];
 
 switch (componente.tipo) {
     case 'transformador':
@@ -42,4 +46,8 @@ switch (componente.tipo) {
 
 $('#cancelar').click(() => {
     window.close();
+});
+
+$('#salvar').click(() => {
+
 });
