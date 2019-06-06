@@ -6,8 +6,8 @@ const Menu = electron.remote.Menu;
 const menu = Menu.getApplicationMenu();
 
 const menu_novo = menu.getMenuItemById('novo');
-const menu_abrir =  menu.getMenuItemById('abrir');
-const menu_salvar =  menu.getMenuItemById('salvar');
+const menu_abrir = menu.getMenuItemById('abrir');
+const menu_salvar = menu.getMenuItemById('salvar');
 
 let componentes = [];
 let componentesDeletados = [];
@@ -26,6 +26,7 @@ class Componente {
 
         this.id = id;
         this.tipo = tipo;
+        this.attrs = [];
 
         const main = $('main');
 
@@ -91,7 +92,7 @@ class Componente {
             webPreferences: {
                 nodeIntegration: true
             },
-            resizable: false
+            resizable: true
         });
 
         config.loadFile('./windows/config-componentes.html');
@@ -104,11 +105,7 @@ class Componente {
 
 class Transformador extends Componente {
     constructor() {
-        super('transformador');
-
-        this.potenciaAparente = null;
-        this.cargaAcumulada = null;
-        this.fase = null;
+        super('transformador', 'T');
 
         this.dom.addClass('transformador');
     }
@@ -116,9 +113,8 @@ class Transformador extends Componente {
 
 class No extends Componente {
     constructor() {
-        super('nó');
+        super('nó', 'N');
 
-        this.cargaAcumulada = null;
         this.dom.addClass('no');
     }
 }
