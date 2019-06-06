@@ -1,4 +1,5 @@
 const $ = require('jquery');
+const electron = require('electron');
 
 class Atributo {
     constructor(id, atributo, select) {
