@@ -28,7 +28,7 @@ class Componente {
             if (this.dom.hasClass('seguir-mouse')) {
                 this.dom.removeClass('seguir-mouse');
 
-                this.dom.click(e => {
+                this.dom.dblclick(e => {
                     abrirConfiguracoes(this);
                 });
 
@@ -58,6 +58,7 @@ class Transformador extends Componente {
     constructor() {
         super();
 
+        this.tipo = 'transformador';
         this.dom.addClass('transformador');
     }
 }
@@ -66,11 +67,14 @@ class No extends Componente {
     constructor() {
         super();
 
+        this.tipo = 'no';
         this.dom.addClass('no');
     }
 }
 
-function abrirConfiguracoes() {
+function abrirConfiguracoes(componente) {
+    localStorage.setItem('componente', componente);
+
     const config = new BrowserWindow({
         title: 'Configurações do componente',
         width: 400, height: 300,
