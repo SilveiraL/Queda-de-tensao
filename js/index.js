@@ -92,7 +92,7 @@ class Componente {
             webPreferences: {
                 nodeIntegration: true
             },
-            resizable: true
+            resizable: false
         });
 
         config.loadFile('./windows/config-componentes.html');

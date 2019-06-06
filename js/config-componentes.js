@@ -72,7 +72,7 @@ function salvar(atributos) {
         else componente.attrs[chave] = valor;
     });
 
-    console.log(JSON.stringify(componente));
+    alert(JSON.stringify(componente));
     cancelar();
 }
 
