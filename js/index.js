@@ -1,29 +1,32 @@
 const $ = require('jquery');
 
-var objetoEdicao = $();
-
+var objetoEdicao;
 
 class Componente {
     constructor(nome_componente) {
         this.componente = $('<div>')
             .addClass(nome_componente)
-            .addClass('componentes')
+            .addClass('componente')
             .addClass('bg-primary')
-            .addClass('mx-4')
             .css('position', 'absolute')
 
         $('main').append(this.componente);
     }
 }
 
-$('.componentes').click(e => {
+$('.componente').click(e => {
     objetoEdicao = new Componente(e.target.id);
 });
 
 $('main').mousemove(e => {
-    const x = e.clientX;
-    const y = e.clientY;
+    if (!!objetoEdicao) {
+        let x = e.clientX;
+        let y = e.clientY;
 
-    objetoEdicao.componente.css('left', x).css('top', y + );
-    console.log(x, y)
+        x -= parseInt(objetoEdicao.componente.css('width').replace('px', '')) / 2;
+        y -= parseInt(objetoEdicao.componente.css('height').replace('px', '')) / 2;
+
+        objetoEdicao.componente.css('left', x).css('top', y);
+        console.log(x, y);
+    }
 });
