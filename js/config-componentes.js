@@ -44,7 +44,6 @@ class Atributo {
 }
 
 const componente = JSON.parse(localStorage.getItem('componente'));
-$('title').html('Configurações do ' + componente.tipo);
 
 let atributos = [new Atributo('id', 'Id')];
 
