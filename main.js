@@ -34,10 +34,10 @@ app.once('ready', () => {
     {
       label: 'File',
       submenu: [
-        { label: 'Novo' },
-        { label: 'Abrir' },
+        { id: 'novo', label: 'Novo', click: () => { } },
+        { id: 'abrir', label: 'Abrir' },
         { type: 'separator' },
-        { label: 'Salvar' },
+        { id: 'salvar', label: 'Salvar' },
         { type: 'separator' },
         {
           label: 'Sair',
