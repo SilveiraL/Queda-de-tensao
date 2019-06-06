@@ -84,6 +84,7 @@ function salvar(atributos) {
 
 const componente = JSON.parse(localStorage.getItem('componente'));
 console.log(componente);
+localStorage.setItem('componente', '');
 
 let atributos = [new Atributo('id', 'Id')];
 
@@ -95,14 +96,14 @@ switch (componente.tipo) {
         atributos.push(new Atributo('ca', 'Carga acumulada'));
         atributos.push(new Atributo('fa', 'Fase', ['Monofásico', 'Bifásico', 'Trifásico']));
 
-        if (!!componente.attrs['potencia-aparente']) atributos[1].setText(componente.attrs['potencia-aparente']);
-        if (!!componente.attrs['carga-acumulada']) atributos[2].setText(componente.attrs['carga-acumulada']);
-        if (!!componente.attrs['fase']) atributos[3].setText(componente.attrs['fase']);
+        if (!!componente.attrs.pa) atributos[1].setText(componente.attrs.pa);
+        if (!!componente.attrs.ca) atributos[2].setText(componente.attrs.ca);
+        if (!!componente.attrs.fa) atributos[3].setText(componente.attrs.fa);
         break;
 
     case 'nó':
         atributos.push(new Atributo('ca', 'Carga acumulada'));
-        if (!!componente.attrs['carga-acumulada']) atributos[1].setText(componente.attrs['carga-acumulada']);
+        if (!!componente.attrs.ca) atributos[1].setText(componente.attrs.ca);
         break;
 }
 

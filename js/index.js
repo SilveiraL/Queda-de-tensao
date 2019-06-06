@@ -102,21 +102,28 @@ class Componente {
         });
 
         config.once('close', () => {
-            const message = JSON.parse(localStorage.getItem('componente'));
-            const attrs = message.attrs;
-            this.id = message.id;
+            const message = localStorage.getItem('componente');
 
-            switch (this.tipo) {
-                case 'transformador':
-                    this.attrs = { 'pa': attrs.pa, 'ca': attrs.ca, 'fa': attrs.fa }
-                    break;
+            if (message != '') {
+                const config = JSON.parse(message);
+                const attrs = config.attrs;
+                this.id = config.id;
 
-                case 'nó':
-                    this.attrs = { 'ca': attrs.ca }
-                    break;
+                switch (this.tipo) {
+                    case 'transformador':
+                        this.attrs = { pa: attrs.pa, ca: attrs.ca, fa: attrs.fa }
+                        break;
+
+                    case 'nó':
+                        this.attrs = { 'ca': attrs.ca }
+                        break;
+                }
+
+                console.log('Componente configurado', this);
             }
-
-            console.log('Componente configurado', this);
+            else {
+                console.log('Cancelado');
+            }
         });
     }
 }
