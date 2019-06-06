@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu, dialog } = require('electron');
 
 let win;
 
@@ -8,7 +8,7 @@ function createWindow() {
     height: 600,
     show: false,
     icon: './img/icon.png',
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     webPreferences: {
       nodeIntegration: true
     }
@@ -27,7 +27,42 @@ function createWindow() {
   });
 }
 
-app.once('ready', createWindow);
+app.once('ready', () => {
+  createWindow();
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate([
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'Novo',
+          click: () => {
+            console.log('Novo');
+          }
+        },
+        {
+          label: 'Abrir',
+          click: e => {
+            dialog.showOpenDialog({ properties: ['openFile'] }, e => {
+              alert(toString(e));
+            });
+          }
+        }
+      ]
+    },
+    {
+      label: 'Desenvolvedor',
+      submenu: [
+        {
+          role: 'toggledevtools'
+        },
+        {
+          role: 'reload'
+        }
+      ]
+    }
+  ]));
+});
 
 app.once('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit();

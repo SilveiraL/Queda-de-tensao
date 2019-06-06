@@ -68,6 +68,10 @@ class Componente {
         else this.dom.css('display', 'none')
     }
 
+    addMain() {
+        $('main').append(this.dom);
+    }
+
     abrirConfiguracoes() {
         localStorage.setItem('componente', JSON.stringify(this));
 
