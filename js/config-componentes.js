@@ -1,15 +1,15 @@
 const $ = require('jquery');
-const electron = require('electron');
 
 class Atributo {
     constructor(id, atributo, select) {
+        this.id = id;
         this.input = null;
         this.atributo = atributo;
 
         if (!!select) {
             this.input = $('<select>')
                 .attr('name', 'Fase')
-                .addClass('col-6')
+                .addClass('col-5')
                 .addClass('rounded')
                 .addClass('border-secondary')
                 .addClass('px-1')
@@ -21,7 +21,7 @@ class Atributo {
         else {
             this.input = $('<input>')
                 .attr('type', 'text')
-                .addClass('col-6')
+                .addClass('col-5')
                 .addClass('rounded')
                 .addClass('border-secondary')
                 .addClass('px-1');
@@ -32,7 +32,7 @@ class Atributo {
             .addClass('p-2')
             .append(
                 $('<span>')
-                    .addClass('col-6')
+                    .addClass('col-7')
                     .addClass('text-dark')
                     .html(atributo + ': ')
             ).append(this.input);
@@ -66,19 +66,24 @@ function cancelar() {
 }
 
 function salvar(atributos) {
+    let config = {
+        id: null,
+        attrs: {}
+    }
+
     atributos.forEach(atributo => {
-        const chave = normalizar(atributo.atributo).replace(/ /g, '-');
+        const chave = normalizar(atributo.id).replace(/ /g, '-');
         const valor = atributo.getText();
-        if (chave == 'id') componente.id = valor;
-        else componente.attrs[chave] = valor;
+        if (chave == 'id') config.id = valor;
+        else config.attrs[chave] = valor;
     });
 
-    alert(JSON.stringify(componente));
+    localStorage.setItem('componente', JSON.stringify(config));
     cancelar();
 }
 
 const componente = JSON.parse(localStorage.getItem('componente'));
-console.log(componente)
+console.log(componente);
 
 let atributos = [new Atributo('id', 'Id')];
 
@@ -86,15 +91,13 @@ if (!!componente.id) atributos[0].setText(componente.id);
 
 switch (componente.tipo) {
     case 'transformador':
-        atributos.push(new Atributo('p', 'Potência'));
-        atributos.push(new Atributo('pa', 'Potência aparente'));
+        atributos.push(new Atributo('pa', 'Potência aparente [kVA]'));
         atributos.push(new Atributo('ca', 'Carga acumulada'));
         atributos.push(new Atributo('fa', 'Fase', ['Monofásico', 'Bifásico', 'Trifásico']));
 
-        if (!!componente.attrs['potencia']) atributos[1].setText(componente.attrs['potencia']);
-        if (!!componente.attrs['potencia-aparente']) atributos[2].setText(componente.attrs['potencia-aparente']);
-        if (!!componente.attrs['carga-acumulada']) atributos[3].setText(componente.attrs['carga-acumulada']);
-        if (!!componente.attrs['fase']) atributos[4].setText(componente.attrs['fase']);
+        if (!!componente.attrs['potencia-aparente']) atributos[1].setText(componente.attrs['potencia-aparente']);
+        if (!!componente.attrs['carga-acumulada']) atributos[2].setText(componente.attrs['carga-acumulada']);
+        if (!!componente.attrs['fase']) atributos[3].setText(componente.attrs['fase']);
         break;
 
     case 'nó':

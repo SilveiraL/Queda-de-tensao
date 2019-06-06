@@ -100,6 +100,24 @@ class Componente {
         config.once('ready-to-show', () => {
             config.show();
         });
+
+        config.once('close', () => {
+            const message = JSON.parse(localStorage.getItem('componente'));
+            const attrs = message.attrs;
+            this.id = message.id;
+
+            switch (this.tipo) {
+                case 'transformador':
+                    this.attrs = { 'pa': attrs.pa, 'ca': attrs.ca, 'fa': attrs.fa }
+                    break;
+
+                case 'nó':
+                    this.attrs = { 'ca': attrs.ca }
+                    break;
+            }
+
+            console.log(this);
+        });
     }
 }
 
