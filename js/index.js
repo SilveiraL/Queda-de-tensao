@@ -2,13 +2,21 @@ const $ = require('jquery');
 const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
 
+let componentes = [];
+
+Array.prototype.top = function () {
+    return this[this.length - 1];
+}
+
 class Componente {
-    constructor() {
+    constructor(tipo) {
         this.dom = $('<div>')
             .addClass('componente')
             .addClass('bg-primary')
             .addClass('seguir-mouse')
             .css('position', 'absolute')
+
+        this.tipo = tipo;
 
         const main = $('main');
 
@@ -56,18 +64,16 @@ class Componente {
 
 class Transformador extends Componente {
     constructor() {
-        super();
+        super('transformador');
 
-        this.tipo = 'transformador';
         this.dom.addClass('transformador');
     }
 }
 
 class No extends Componente {
     constructor() {
-        super();
+        super('no');
 
-        this.tipo = 'no';
         this.dom.addClass('no');
     }
 }
@@ -94,10 +100,10 @@ function abrirConfiguracoes(componente) {
 $('.componente').click(e => {
     switch (e.target.id) {
         case 'transformador':
-            objetoEdicao = new Transformador();
+            componentes.push(new Transformador());
             break;
 
         case 'no':
-            objetoEdicao = new No();
+            componentes.push(new No());
     }
 });
