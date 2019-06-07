@@ -14,7 +14,21 @@ Menu.setApplicationMenu(Menu.buildFromTemplate([
         label: 'File',
         submenu: [
             { id: 'novo', label: 'Novo', click: () => { } },
-            { id: 'abrir', label: 'Abrir' },
+            {
+                id: 'abrir', label: 'Abrir', click: () => {
+                    dialog.showOpenDialog(caminho => {
+                        fs.readFile(caminho + '', 'utf-8', (erro, conteudo) => {
+                            if (!erro) {
+                                componentes = JSON.parse(conteudo);
+                                componentes.forEach(componente => {
+                                    componente.addMain();
+                                });
+                            }
+                            else console.log(erro.message);
+                        });
+                    });
+                }
+            },
             { type: 'separator' },
             {
                 id: 'salvar', label: 'Salvar', click: () => {
@@ -91,6 +105,10 @@ class Componente {
                 console.log(this.getX(), this.getY());
             }
         });
+    }
+
+    addMain() {
+        $('main').append(this.dom);
     }
 
     setX(x) {
