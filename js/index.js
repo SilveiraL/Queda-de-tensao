@@ -1,16 +1,54 @@
 const $ = require('jquery');
 const electron = require('electron');
-const BrowserWindow = electron.remote.BrowserWindow;
-const Menu = electron.remote.Menu;
-
-const menu = Menu.getApplicationMenu();
-
-const menu_novo = menu.getMenuItemById('novo');
-const menu_abrir = menu.getMenuItemById('abrir');
-const menu_salvar = menu.getMenuItemById('salvar');
+const fs = require('fs');
+const remote = electron.remote;
+const dialog = remote.dialog;
+const BrowserWindow = remote.BrowserWindow;
+const Menu = remote.Menu;
 
 let componentes = [];
 let componentesDeletados = [];
+
+Menu.setApplicationMenu(Menu.buildFromTemplate([
+    {
+        label: 'File',
+        submenu: [
+            { id: 'novo', label: 'Novo', click: () => { } },
+            { id: 'abrir', label: 'Abrir' },
+            { type: 'separator' },
+            {
+                id: 'salvar', label: 'Salvar', click: () => {
+                    dialog.showSaveDialog(caminho => {
+                        if (caminho.indexOf('.qt') == -1) caminho = caminho + '.qt';
+
+                        fs.writeFile(caminho, JSON.stringify(componentes), e => {
+                            if (!e) alert('Salvo com sucesso');
+                            else alert('Erro ao salvar');
+                        });
+                    });
+                }
+            },
+            { type: 'separator' },
+            {
+                label: 'Sair',
+                click: () => {
+                    app.quit();
+                }
+            }
+        ]
+    },
+    {
+        label: 'Desenvolvedor',
+        submenu: [
+            {
+                role: 'toggledevtools'
+            },
+            {
+                role: 'reload'
+            }
+        ]
+    }
+]));
 
 Array.prototype.top = function () {
     return this[this.length - 1];
@@ -122,7 +160,7 @@ class Componente {
                 console.log('Componente configurado', this);
             }
             else {
-                console.log('Cancelado');
+                console.log('Configuração cancelada');
             }
         });
     }
