@@ -1,13 +1,12 @@
-class NoArvoreBinaria {
+class NoArvore {
     constructor(id, valor) {
         this.id = id;
-        this.valor = valor;
         this.esquerda = null;
         this.direita = null;
     }
 
     print() {
-        console.log(`Id: ${this.id}\nValor: ${this.valor}`);
+        console.log(this.id);
         return this;
     }
 
@@ -19,14 +18,14 @@ class NoArvoreBinaria {
         }
     }
 
-    inserir(id, valor = null) {
+    append(id, valor = null) {
         if (id < this.id) {
-            if (this.esquerda == null) this.esquerda = new NoArvoreBinaria(id, valor);
-            else this.esquerda.inserir(id, valor);
+            if (this.esquerda == null) this.esquerda = new NoArvore(id, valor);
+            else this.esquerda.append(id, valor);
         }
         else {
-            if (this.direita == null) this.direita = new NoArvoreBinaria(id, valor);
-            else this.direita.inserir(id, valor);
+            if (this.direita == null) this.direita = new NoArvore(id, valor);
+            else this.direita.append(id, valor);
         }
 
         return this;
@@ -111,11 +110,3 @@ class Arvore {
         }
     }
 }
-
-const arvore = new Arvore(1);
-arvore.push(new Arvore(2));
-arvore.push(new Arvore(3));
-arvore.push(new Arvore(4));
-
-arvore.child(3);
-arvore.print();

@@ -68,19 +68,19 @@ Array.prototype.top = function () {
     return this[this.length - 1];
 }
 
-class Componente {
+class Componente extends NoArvore {
     constructor(tipo, id) {
+        super(id)
         this.dom = $('<div>')
             .addClass('componente')
             .addClass('bg-primary')
             .addClass('seguir-mouse')
             .css('position', 'absolute')
 
-        this.id = id;
         this.tipo = tipo;
         this.attrs = [];
 
-        const main = $('main');
+        const main = $('#main');
 
         main.append(this.dom).mousemove(e => {
             if (this.dom.hasClass('seguir-mouse')) {
@@ -108,7 +108,7 @@ class Componente {
     }
 
     addMain() {
-        $('main').append(this.dom);
+        $('#main').append(this.dom);
     }
 
     setX(x) {
@@ -133,7 +133,7 @@ class Componente {
     }
 
     addMain() {
-        $('main').append(this.dom);
+        $('#main').append(this.dom);
     }
 
     abrirConfiguracoes() {
@@ -199,6 +199,27 @@ class No extends Componente {
         this.dom.addClass('no');
     }
 }
+
+class Cabo {
+    constructor(xi, yi, xf, yf) {
+        const canvas = document.createElement('canvas');
+        this.dom = $(canvas);
+        this.dom.css('background-color', 'green');
+        this.dom.css('width', xf - xi);
+        this.dom.css('height', yf - yi);
+        this.context = canvas.getContext('2d');
+        this.context.lineWidth = 10;
+        this.context.lineTo(xi, yi);
+        this.context.lineTo(xf, yf);
+        this.context.stroke();
+
+        this.main = $('#main');
+        this.main.append(this.dom);
+    }
+}
+
+new Cabo(0, 0, 100, 100);
+
 
 $('.componente').click(e => {
     switch (e.target.id) {
